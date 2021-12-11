@@ -65,8 +65,8 @@ jobs:
         id: amazon-ecr-login
       
       - name: Debug
-      if: ${{ always() }}
-      uses: mxschmitt/action-tmate@v3
+        if: ${{ always() }}
+        uses: mxschmitt/action-tmate@v3
       
       - name: Push nginx image to ecr
         env:
