@@ -17,6 +17,7 @@ jobs:
   deploy:
     name: Deploy app to AWS Fargate
     runs-on: ubuntu-latest
+    
     steps: 
       - name: Configure aws credentials for prod
         # GitHubコンテキストは、if内では演算子がなければ${}不要
