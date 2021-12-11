@@ -17,7 +17,7 @@ jobs:
   deploy:
     name: Deploy app to AWS Fargate
     runs-on: ubuntu-latest
-    
+
     steps: 
       - name: Configure aws credentials for prod
         # GitHubコンテキストは、if内では演算子がなければ${}不要
@@ -29,6 +29,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ secrets.PROD_AWS_ASSUME_ROLE_ARN }}
           role-duration-seconds: 1800
+
       - name: Set env vars for prod
        # if: github.ref == 'refs/heads/main'
         run: echo "ENV_NAME=prod" >> $GITHUB_ENV
@@ -36,6 +37,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - run: docker-compose up -d --build app web
+
       - name: Cache composer
         id: cache-composer
         ## actions/cacheは、キャッシュの復元ｰ>Stepの実行ー＞キャッシュの保存という流れで実行される
@@ -48,12 +50,12 @@ jobs:
         if: ${{ !steps.cache-composer.outputs.cache-hit }}
       
       - name: Cache npm
-       id: cache-npm-ci
-       uses: actions/cache@v2
-       with:
-         path: backend/node_modules
-         key: npm-v1-${{ hashFiles('backend/package-lock.json')}}
-      
+        id: cache-npm-ci
+        uses: actions/cache@v2
+        with:
+          path: backend/node_modules
+          key: npm-v1-${{ hashFiles('backend/package-lock.json')}}
+
       - run: docker-compose exec -T web npm ci
         if: ${{ !steps.cache-npm-ci.outputs.cache-hit }}
 
