@@ -61,7 +61,7 @@ jobs:
           key: npm-v1-${{ hashFiles('backend/package-lock.json') }}
 
       - run: docker-compose exec -T web npm ci
-        if: ${{ !steps.cache-npm-ci.outputs.cache-hit }}
+        # if: ${{ !steps.cache-npm-ci.outputs.cache-hit }}
 
       - run: docker-compose exec -T web npm run prod
 
