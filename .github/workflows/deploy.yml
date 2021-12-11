@@ -1,9 +1,10 @@
 name: deploy
 
 on: push
-  push: branches
-    - main
-    - feature/push_images_to_ecr
+  push: 
+    branches:
+      -  main
+      -  feature/push_images_to_ecr
 
 env: 
   AWS_REGION: ap-northeast-1
