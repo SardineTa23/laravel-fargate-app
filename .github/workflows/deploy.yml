@@ -46,6 +46,10 @@ jobs:
       
       - name: Deploy to ECS
         run: ecspresso deploy --config config_$ENV_NAME.yaml
+      
+      - name: Debug
+        if: ${{ always() }}
+        uses: mxschmitt/action-tmate@v3
 
       - uses: actions/checkout@v2
       
