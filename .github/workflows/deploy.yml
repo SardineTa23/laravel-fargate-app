@@ -39,15 +39,6 @@ jobs:
         # if: github.ref == 'refs/heads/main'
         run: echo "ENV_NAME=prod" >> $GITHUB_ENV
 
-      - name: Dowunload ecspresso
-        uses: kayac/ecspresso@v0
-        with:
-          version: v1.5.3
-
-      - name: Deploy to ECS
-        run: ecspresso deploy --config config_$ENV_NAME.yaml
-        working-directory: ./ecspresso
-
       - uses: actions/checkout@v2
 
       - run: docker-compose up -d --build app web
@@ -105,3 +96,11 @@ jobs:
             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Download ecspresso uses: kayac/ecspresso@v0
+        with:
+          version: v1.5.3
+
+      - name: Deploy to ecs
+        run: ecspresso deploy --config config_$ENV_NAME.yaml
+        working-directory: ./ecspresso
