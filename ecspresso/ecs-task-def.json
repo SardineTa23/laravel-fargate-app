@@ -14,7 +14,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "{{ must_env `AWS_REGION` }}",
+          "awslogs-group": "{{ tfstate `data.aws_cloudwatch_log_group.nginx.name` }}",
           "awslogs-region": "{{ must_env `AWS_REGION` }}",
           "awslogs-stream-prefix": "ecs"
         }
