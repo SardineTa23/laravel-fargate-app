@@ -1,7 +1,15 @@
 version: "3.8"
+
 volumes:
   php-fpm-socket:
   db-store:
+  
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${VPC_CIDR:-172.31.0.0/16}
+
 services:
   app:
     build:
@@ -42,6 +50,8 @@ services:
       - type: bind
         source: ./backend
         target: /work/backend
+    environment:
+      - VPC_CIDR=${VPC_CIDR:-172.31.0.0/16}
 
   db:
     build:
